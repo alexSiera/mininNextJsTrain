@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Head from "next/head";
+import { MainLayout } from "../components/MainLayout";
 
 export default function Index() {
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Next js app</title>
         <meta name="keywords" content="next, js, nextjs, react" />
@@ -27,6 +28,6 @@ export default function Index() {
         dolores exercitationem tenetur, blanditiis nisi illum velit et minima
         sunt dolorum.
       </p>
-    </>
+    </MainLayout>
   );
 }
