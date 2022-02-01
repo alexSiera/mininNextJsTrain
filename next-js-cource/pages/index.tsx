@@ -8,6 +8,7 @@ export default function Index() {
         <title>Next js app</title>
         <meta name="keywords" content="next, js, nextjs, react" />
         <meta name="description" content="this is youtube lesson" />
+        <meta charSet="utf-8" />
       </Head>
       <h1>Hello Next.js</h1>
       <p>
