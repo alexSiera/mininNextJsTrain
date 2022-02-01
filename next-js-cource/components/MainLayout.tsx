@@ -1,8 +1,15 @@
+import Head from "next/head";
 import Link from "next/link";
 
-export function MainLayout({ children, title = "" }) {
+export function MainLayout({ children, title = "Next App" }) {
   return (
     <>
+      <Head>
+        <title>{title} | Next Course</title>
+        <meta name="keywords" content="next, js, nextjs, react" />
+        <meta name="description" content="this is youtube lesson" />
+        <meta charSet="utf-8" />
+      </Head>
       <nav>
         <Link href="/">
           <a>Home</a>

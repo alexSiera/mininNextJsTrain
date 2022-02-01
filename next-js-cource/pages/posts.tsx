@@ -5,9 +5,9 @@ import { MainLayout } from "../components/MainLayout";
 export default function Posts() {
   return (
     <MainLayout>
-      <Head>
+      {/* <Head>
         <title>Post page next js cource</title>
-      </Head>
+      </Head> */}
       <h1>posts Page</h1>
     </MainLayout>
   );
