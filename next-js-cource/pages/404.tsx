@@ -1,11 +1,12 @@
 import Link from "next/link";
 
+import classes from "../styles/error.module.scss";
 import { MainLayout } from "../components/MainLayout";
 
 const ErrorPage = () => {
   return (
     <MainLayout title="Error page">
-      <h1>Error 404</h1>
+      <h1 className={classes.error}>Error 404</h1>
       <p>
         Please
         <Link href="/">
