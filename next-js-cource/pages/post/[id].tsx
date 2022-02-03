@@ -1,5 +1,7 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { MainLayout } from "../../components/MainLayout";
 
@@ -10,10 +12,29 @@ export type Post = {
 };
 
 type PostProps = {
-  post: Post;
+  post: Post | null;
 };
 
-const Post: NextPage<PostProps> = ({ post }) => {
+const Post: NextPage<PostProps> = ({ post: serverPost }) => {
+  const [post, setPost] = useState(serverPost);
+  const { query } = useRouter();
+  useEffect(() => {
+    const load = async () => {
+      const res = await fetch(`http://localhost:4200/posts/${query.id}`);
+      const data: Post = await res.json();
+      setPost(data);
+    };
+    if (!serverPost) load();
+  }, []);
+
+  if (!post) {
+    return (
+      <MainLayout>
+        <p>Loading...</p>
+      </MainLayout>
+    );
+  }
+
   return (
     <MainLayout title="Single post">
       <h1>{post.title}</h1>
@@ -28,9 +49,23 @@ const Post: NextPage<PostProps> = ({ post }) => {
 
 export default Post;
 
-Post.getInitialProps = async ({ query }) => {
+//Old method
+
+Post.getInitialProps = async ({ query, req }) => {
+  if (!req) {
+    return { post: null } as unknown as Post[];
+  }
   const { id } = query;
   const res = await fetch(`http://localhost:4200/posts/${id}`);
   const post: Post = await res.json();
   return { post };
 };
+
+// export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+//   const res = await fetch(`http://localhost:4200/posts/${query.id}`);
+//   const post: Post = await res.json();
+
+//   return {
+//     props: { post },
+//   };
+// };
