@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -14,7 +14,7 @@ const Posts: NextPage<PostsProps> = ({ posts: serverPosts }) => {
 
   useEffect(() => {
     const load = async () => {
-      const data = await fetch("http://localhost:4200/posts");
+      const data = await fetch(`${process.env.API_URL}/posts`);
       const posts: Post[] = await data.json();
       setPosts(posts);
     };
@@ -52,9 +52,9 @@ const Posts: NextPage<PostsProps> = ({ posts: serverPosts }) => {
 export default Posts;
 
 // This method is using for initial loading some data in a server...
-Posts.getInitialProps = async ({ req }) => {
+Posts.getInitialProps = async ({ req }: NextPageContext) => {
   if (!req) return { posts: null };
-  const data = await fetch("http://localhost:4200/posts");
+  const data = await fetch(`${process.env.API_URL}/posts`);
   const posts: Post[] = await data.json();
   return { posts };
 };

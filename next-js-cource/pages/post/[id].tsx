@@ -20,11 +20,12 @@ const Post: NextPage<PostProps> = ({ post: serverPost = null }) => {
   const { query } = useRouter();
   useEffect(() => {
     const load = async () => {
-      const res = await fetch(`http://localhost:4200/posts/${query.id}`);
+      const res = await fetch(`${process.env.API_URL}/posts/${query.id}`);
       const data: Post = await res.json();
       setPost(data);
     };
     if (!serverPost) load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!post) {
@@ -51,18 +52,18 @@ export default Post;
 
 //Old method
 
-// Post.getInitialProps = async ({ query, req }) => {
+// Post.getInitialProps = async ({ query, req }: NextPageContext) => {
 //   if (!req) {
 //     return { post: null } as unknown as Post[];
 //   }
 //   const { id } = query;
-//   const res = await fetch(`http://localhost:4200/posts/${id}`);
+//   const res = await fetch(`${process.env.API_URL}/posts/${id}`);
 //   const post: Post = await res.json();
 //   return { post };
 // };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch(`http://localhost:4200/posts/${query.id}`);
+  const res = await fetch(`${process.env.API_URL}/posts/${query.id}`);
   const post: Post = await res.json();
 
   return {
