@@ -15,7 +15,7 @@ type PostProps = {
   post: Post | null;
 };
 
-const Post: NextPage<PostProps> = ({ post: serverPost }) => {
+const Post: NextPage<PostProps> = ({ post: serverPost = null }) => {
   const [post, setPost] = useState(serverPost);
   const { query } = useRouter();
   useEffect(() => {
@@ -51,21 +51,21 @@ export default Post;
 
 //Old method
 
-Post.getInitialProps = async ({ query, req }) => {
-  if (!req) {
-    return { post: null } as unknown as Post[];
-  }
-  const { id } = query;
-  const res = await fetch(`http://localhost:4200/posts/${id}`);
-  const post: Post = await res.json();
-  return { post };
-};
-
-// export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-//   const res = await fetch(`http://localhost:4200/posts/${query.id}`);
+// Post.getInitialProps = async ({ query, req }) => {
+//   if (!req) {
+//     return { post: null } as unknown as Post[];
+//   }
+//   const { id } = query;
+//   const res = await fetch(`http://localhost:4200/posts/${id}`);
 //   const post: Post = await res.json();
-
-//   return {
-//     props: { post },
-//   };
+//   return { post };
 // };
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const res = await fetch(`http://localhost:4200/posts/${query.id}`);
+  const post: Post = await res.json();
+
+  return {
+    props: { post },
+  };
+};

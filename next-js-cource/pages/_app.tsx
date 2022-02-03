@@ -6,7 +6,7 @@ import "../styles/globals.scss";
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <NextNprogress />
+      <NextNprogress color="yellow" />
       <Component {...pageProps} />
       {/* <style jsx global>
         {`
